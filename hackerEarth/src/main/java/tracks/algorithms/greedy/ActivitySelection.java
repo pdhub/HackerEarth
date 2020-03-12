@@ -15,7 +15,12 @@ public class ActivitySelection {
                 k = i;
             }
         }
+        
+        some();
         return activityIndexs;
+    }
+
+    private static void some() {
     }
 
     public static void main(String[] args) {
