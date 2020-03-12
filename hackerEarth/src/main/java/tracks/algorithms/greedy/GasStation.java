@@ -6,34 +6,24 @@ import java.util.Set;
 public class GasStation {
     public int canCompleteCircuit(int[] gas, int[] cost) {
         int startingGasStation = 0;
-        int petrol = gas[startingGasStation];
-        int nextGasStation = startingGasStation;
-        Set<Integer> doneWithzstation = new HashSet<>();
-        int stationsVisited = 1;
-        while (!allStationsChecked(doneWithzstation, gas.length)){
-            int prevGasStation = nextGasStation;
-            nextGasStation = (nextGasStation + 1 )%gas.length;
-            if(canGoToNextStation(petrol, cost[prevGasStation])){
-                stationsVisited++;
-                if (stationsVisited == gas.length)
-                    return startingGasStation;
-                petrol = petrol - cost[prevGasStation] + gas[nextGasStation];
+        int totalGas = 0;
+        int accumulate = 0;
+
+        for (int i = 0; i < gas.length; i++) {
+            totalGas += gas[i] - cost[i];
+        }
+        if (totalGas < 0)
+            return -1;
+
+        for (int i = 0; i < gas.length; i++) {
+            if (accumulate + gas[i] - cost[i] < 0){
+                accumulate = 0;
+                startingGasStation = i + 1;
             }else {
-                doneWithzstation.add(startingGasStation);
-                startingGasStation = nextGasStation;
-                petrol = gas[startingGasStation];
-                stationsVisited = 1;
+                accumulate += gas[i] - cost[i];
             }
         }
-        return -1;
-    }
-
-    private boolean allStationsChecked(Set<Integer> doneWithzstation, int stations) {
-        return doneWithzstation.size() == stations;
-    }
-
-    private boolean canGoToNextStation(int petrol, int costToReachNext) {
-        return petrol - costToReachNext > 0;
+        return startingGasStation;
     }
 
     public static void main(String[] args) {
