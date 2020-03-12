@@ -1,8 +1,5 @@
 package tracks.algorithms.greedy;
 
-import java.util.HashSet;
-import java.util.Set;
-
 public class GasStation {
     public int canCompleteCircuit(int[] gas, int[] cost) {
         int startingGasStation = 0;
